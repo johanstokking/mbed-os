@@ -323,6 +323,8 @@ public:
      */
     lorawan_status_t join(bool is_otaa);
 
+    lorawan_status_t get_otaa_session_keys(uint8_t *nwk_skey, uint8_t *app_skey);
+
     /**
      * MAC operations upon successful transmission
      */

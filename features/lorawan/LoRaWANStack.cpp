@@ -1214,6 +1214,15 @@ void LoRaWANStack::process_connected_state()
 
     if (_ctrl_flags & USING_OTAA_FLAG) {
         tr_debug("OTAA Connection OK!");
+
+        uint8_t nwk_skey[16];
+        uint8_t app_skey[16];
+        if (_loramac.get_otaa_session_keys(nwk_skey, app_skey) == LORAWAN_STATUS_OK) {
+            tr_debug("NwkSKey = %s", mbed_trace_array(nwk_skey, sizeof(nwk_skey)));
+            tr_debug("AppSKey = %s", mbed_trace_array(app_skey, sizeof(app_skey)));
+        } else {
+            tr_debug("Unable to show session keys");
+        }
     }
 
     _lw_session.active = true;

@@ -1531,6 +1531,18 @@ lorawan_status_t LoRaMac::join(bool is_otaa)
     return send_join_request();
 }
 
+lorawan_status_t LoRaMac::get_otaa_session_keys(uint8_t *nwk_skey, uint8_t *app_skey)
+{
+    if (!nwk_joined()) {
+        return LORAWAN_STATUS_NO_NETWORK_JOINED;
+    }
+
+    memcpy(nwk_skey, _params.keys.nwk_skey, sizeof(_params.keys.nwk_skey));
+    memcpy(app_skey, _params.keys.app_skey, sizeof(_params.keys.app_skey));
+
+    return LORAWAN_STATUS_OK;
+}
+
 static void memcpy_convert_endianess(uint8_t *dst,
                                      const uint8_t *src,
                                      uint16_t size)
