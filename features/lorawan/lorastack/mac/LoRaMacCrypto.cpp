@@ -29,6 +29,9 @@
 #include "LoRaMacCrypto.h"
 #include "system/lorawan_data_structures.h"
 
+#include "mbed-trace/mbed_trace.h"
+#define TRACE_GROUP "LCRY"
+
 
 #if defined(MBEDTLS_CMAC_C) && defined(MBEDTLS_AES_C) && defined(MBEDTLS_CIPHER_C)
 
@@ -60,6 +63,9 @@ int LoRaMacCrypto::compute_mic(const uint8_t *buffer, uint16_t size,
     mic_block_b0[13] = (seq_counter >> 24) & 0xFF;
 
     mic_block_b0[15] = size & 0xFF;
+
+    tr_debug("MIC key = %s", mbed_trace_array(key, key_length/8));
+    tr_debug("MIC mic_block_b0 = %s", mbed_trace_array(mic_block_b0, sizeof(mic_block_b0)));
 
     mbedtls_cipher_init(aes_cmac_ctx);
 
