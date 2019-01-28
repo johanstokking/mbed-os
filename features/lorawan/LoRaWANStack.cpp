@@ -358,6 +358,7 @@ int16_t LoRaWANStack::handle_rx(uint8_t *data, uint16_t length, uint8_t &port, i
 
     // No messages to read.
     if (!_rx_msg.receive_ready) {
+        tr_debug("no messages to read");
         return LORAWAN_STATUS_WOULD_BLOCK;
     }
 
@@ -371,6 +372,7 @@ int16_t LoRaWANStack::handle_rx(uint8_t *data, uint16_t length, uint8_t &port, i
         received_flags &= MSG_FLAG_MASK;
 
         if (_rx_msg.msg.mcps_indication.port != port || !(flags & received_flags)) {
+            tr_debug("LORAWAN_STATUS_WOULD_BLOCK: %d != %d || (!(%d & %d))", _rx_msg.msg.mcps_indication.port, port, flags, received_flags);
             return LORAWAN_STATUS_WOULD_BLOCK;
         }
     }
