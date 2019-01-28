@@ -64,8 +64,11 @@ int LoRaMacCrypto::compute_mic(const uint8_t *buffer, uint16_t size,
 
     mic_block_b0[15] = size & 0xFF;
 
+    tr_debug("MIC dir = %x", dir);
+    tr_debug("MIC address = %x", address);
     tr_debug("MIC key = %s", mbed_trace_array(key, key_length/8));
     tr_debug("MIC mic_block_b0 = %s", mbed_trace_array(mic_block_b0, sizeof(mic_block_b0)));
+    tr_debug("MIC counter = %d", seq_counter);
 
     mbedtls_cipher_init(aes_cmac_ctx);
 
